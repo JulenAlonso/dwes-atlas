@@ -30,10 +30,22 @@ class Controlador
 	{
 		Vista::usuarioAlta();
 	}
+	// ------------------------------------------------------------------------------------------------------------------------------
 	public static function atlasAnadir()
 	{
 		Vista::atlasAnadir();
 	}
+	// ------------------------------------------------------------------------------------------------------------------------------
+	public static function AniadirPais($pais, $capital)
+	{
+		$bd = new Modelo();
+		$bd->AniadirPais($pais, $capital);
+		$bd = null;
+		echo "Pais añadido";
+		Vista::atlasAnadir();
+
+	}	// ------------------------------------------------------------------------------------------------------------------------------
+
 	public static function atlasModificar()
 	{
 		Vista::atlasModificar();
@@ -55,7 +67,8 @@ class Controlador
 			// La operación se ha efectuado con éxito y podemos realizar alguna acción
 			return ($resultado);
 		}
-		Modelo::desconectarBD();
+		Modelo::this->desconectarBD(); //Tiene que ser "this->" ya que no es ESTATICO
+		//this = objeto
 		Vista::atlasMostrar();
 	}
 	public static function atlasEliminar()
@@ -78,7 +91,7 @@ else
 switch ($opcion[0]) {
 	// Acceso de usuario
 	case "usuario_registro":
-		Controlador::usuarioRegistro($_POST['usuario'],$_POST['passwd']);
+		Controlador::usuarioRegistro($_POST['usuario'], $_POST['passwd']);
 		break;
 	// Registro de usuario
 	case "usuario_alta":
@@ -88,6 +101,9 @@ switch ($opcion[0]) {
 	case "atlas_anadir":
 		Controlador::atlasAnadir();
 		break;
+	//Añadir: Pais y capital
+	case "aniadir":
+		Controlador::AniadirPais($_POST['pais'], $_POST['capital']);
 	// Modificar entrada en atlas
 	case "atlas_modificar":
 		Controlador::atlasModificar();
