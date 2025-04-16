@@ -36,12 +36,21 @@ class Modelo
 	{
 		$sql = 'INSERT INTO atlas (pais, capital) VALUES (:pais, :capital);';
 		//HACER BINDAJE
-		$stmt =$this->bd->prepare($sql);
+		$stmt = $this->bd->prepare($sql);
 		$stmt->bindValue(':pais', $pais);
 		$stmt->bindValue(':capital', $capital);
 
 		$stmt->execute();//Lanzar la sentencia al servidor de la bbdd.
 	}
-}
 
+	// Consultar todos los paises:
+	public function VerPaises()
+	{
+		$sql = 'SELECT * FROM atlas;';
+		$stmt = $this->bd->prepare($sql);
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+}
 ?>

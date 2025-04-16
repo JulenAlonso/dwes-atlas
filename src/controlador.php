@@ -30,47 +30,45 @@ class Controlador
 	{
 		Vista::usuarioAlta();
 	}
-	// ------------------------------------------------------------------------------------------------------------------------------
+	// AÑADIR --- ¡Funciona!
 	public static function atlasAnadir()
 	{
 		Vista::atlasAnadir();
 	}
-	// ------------------------------------------------------------------------------------------------------------------------------
 	public static function AniadirPais($pais, $capital)
 	{
 		$bd = new Modelo();
 		$bd->AniadirPais($pais, $capital);
 		$bd = null;
-		echo "Pais añadido";
+		// echo "Pais añadido";
 		Vista::atlasAnadir();
-
-	}	// ------------------------------------------------------------------------------------------------------------------------------
+	}
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// MOSTRAR --- ¡Funciona!
+	public static function atlasMostrar()
+	{
+		//----Entra perfectamente----
+		Vista::atlasMostrar();
+	}
+	public static function verPaises()
+	{
+		$modelo = new Modelo();
+		$paises = $modelo->VerPaises();
+		$modelo = null;
+		echo "<table>";
+		echo "<tr><th>Pais</th><th>Capital</th></tr>";
+		foreach ($paises as $pais) {
+			echo "<tr><td>" . $pais['pais'] . "</td><td>" . $pais['capital'] . "</td></tr>";
+		}
+		echo "</table>";
+	}
+	// ------------------------------------------------------------------------------------------------------------------------------
 
 	public static function atlasModificar()
 	{
 		Vista::atlasModificar();
 	}
-	public static function atlasMostrar()
-	{
 
-		$error = Modelo::conectarBD();
-		if (!$error) {
-			$resultado = Modelo::getAtlas();
-			if (gettype($resultado) == "object") {
-				$error = true;
-			}
-		}
-		if ($error) {
-			$_SESSION["debug"] = 'Se ha producido un error (' . $error . '): ' . $error->getCode();
-			// La operación ha finalizado con error y podemos realizar alguna acción
-		} else {
-			// La operación se ha efectuado con éxito y podemos realizar alguna acción
-			return ($resultado);
-		}
-		Modelo::this->desconectarBD(); //Tiene que ser "this->" ya que no es ESTATICO
-		//this = objeto
-		Vista::atlasMostrar();
-	}
 	public static function atlasEliminar()
 	{
 		Vista::atlasEliminar();
@@ -97,6 +95,8 @@ switch ($opcion[0]) {
 	case "usuario_alta":
 		Controlador::usuarioAlta();
 		break;
+
+	// --------- AÑADIR
 	// Alta de entrada en atlas
 	case "atlas_anadir":
 		Controlador::atlasAnadir();
@@ -104,14 +104,21 @@ switch ($opcion[0]) {
 	//Añadir: Pais y capital
 	case "aniadir":
 		Controlador::AniadirPais($_POST['pais'], $_POST['capital']);
+		break;
+	//---------------------------------
+
 	// Modificar entrada en atlas
 	case "atlas_modificar":
 		Controlador::atlasModificar();
 		break;
+
+	// --------- MOSTRAR
 	// Mostrar contenido del atlas
 	case "atlas_mostrar":
-		Controlador::atlasMostrar();
+		Controlador::atlasMostrar(); // Mostrar vista
+		Controlador::verPaises();   // Mostrar mensaje del modelo
 		break;
+
 	// Baja de entrada en atlas
 	case "atlas_eliminar":
 		Controlador::atlasEliminar();
