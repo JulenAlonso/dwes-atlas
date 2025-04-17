@@ -30,6 +30,7 @@ class Controlador
 	{
 		Vista::usuarioAlta();
 	}
+	// ------------------------------------------------------------------------------------------------------------------------------
 	// AÑADIR --- ¡Funciona!
 	public static function atlasAnadir()
 	{
@@ -63,16 +64,37 @@ class Controlador
 		echo "</table>";
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------
+	// ELIMINAR --- 
+	public static function atlasEliminar()
+	{
+		Vista::atlasEliminar();
+	}
+
+	public static function EliminarPais($pais, $capital)
+	{
+		$bd = new Modelo();
+		$deleted = $bd->EliminarPais($pais, $capital);
+		$bd = null;
+
+		if ($deleted > 0) {
+			$mensaje = "País eliminado correctamente.";
+		} else {
+			$mensaje = "No se encontró ningún país con esos datos.";
+		}
+
+		// Vista::atlasEliminar($mensaje);
+	}
+
+
+	// ------------------------------------------------------------------------------------------------------------------------------
 
 	public static function atlasModificar()
 	{
 		Vista::atlasModificar();
 	}
 
-	public static function atlasEliminar()
-	{
-		Vista::atlasEliminar();
-	}
+
+
 	public static function atlasBuscar()
 	{
 		Vista::atlasBuscar();

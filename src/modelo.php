@@ -42,7 +42,20 @@ class Modelo
 
 		$stmt->execute();//Lanzar la sentencia al servidor de la bbdd.
 	}
-
+	//-------------------------------------------------------------------------------------------------------------------------------
+	// Eliminar un pais de la base de datos
+	public function EliminarPais($pais, $capital)
+	{
+		$sql = 'DELETE FROM atlas WHERE pais = :pais AND capital = :capital;';
+		$stmt = $this->bd->prepare($sql);
+		$stmt->bindValue(':pais', $pais);
+		$stmt->bindValue(':capital', $capital);
+	
+		$stmt->execute();
+		return $stmt->rowCount(); // returns number of rows deleted
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------
 	// Consultar todos los paises:
 	public function VerPaises()
 	{
@@ -51,6 +64,7 @@ class Modelo
 		$stmt->execute();
 		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $resultado;
+
 	}
 }
 ?>
