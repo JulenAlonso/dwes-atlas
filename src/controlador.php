@@ -76,13 +76,19 @@ class Controlador
 		$deleted = $bd->EliminarPais($pais, $capital);
 		$bd = null;
 
-		if ($deleted > 0) {
-			$mensaje = "País eliminado correctamente.";
-		} else {
-			$mensaje = "No se encontró ningún país con esos datos.";
-		}
+		// Comprobamos si se ha eliminado algún país
+		// y mostramos un mensaje según el resultado.
+		// Si se ha eliminado, $deleted será mayor que 0.
+		// Si no se ha encontrado ningún país con esos datos, $deleted será 0.
+		// Si se ha enviado la acción de eliminar, mostramos el mensaje correspondiente.
 
-		// Vista::atlasEliminar($mensaje);
+		if (isset($_POST['accion']['atlas_eliminar'])) {
+			if ($deleted > 0) {
+				echo "País eliminado correctamente.";
+			} else {
+				echo "No se encontró ningún país con esos datos.";
+			}
+		}
 	}
 
 

@@ -46,15 +46,24 @@ class Modelo
 	// Eliminar un pais de la base de datos
 	public function EliminarPais($pais, $capital)
 	{
+		// Creamos una consulta SQL para eliminar un registro de la tabla 'atlas'
+		// donde el país y la capital coincidan con los valores proporcionados.
 		$sql = 'DELETE FROM atlas WHERE pais = :pais AND capital = :capital;';
+	
+		// Preparamos la consulta con PDO para evitar inyecciones SQL.
 		$stmt = $this->bd->prepare($sql);
+	
+		// Asignamos los valores recibidos a los parámetros de la consulta.
 		$stmt->bindValue(':pais', $pais);
 		$stmt->bindValue(':capital', $capital);
 	
+		// Ejecutamos la consulta.
 		$stmt->execute();
-		return $stmt->rowCount(); // returns number of rows deleted
-	}
 	
+		// Devolvemos el número de filas que fueron eliminadas (0 si no se encontró coincidencia).
+		return $stmt->rowCount();
+	}
+		
 	//-------------------------------------------------------------------------------------------------------------------------------
 	// Consultar todos los paises:
 	public function VerPaises()
