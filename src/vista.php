@@ -28,7 +28,7 @@ class Vista
 	}
 	public static function atlasModificar()
 	{
-		$contenido = 'frm_modificar.html';
+		$contenido = './frm/menu/modificar.html';
 		include './frm/main.html';
 	}
 	public static function atlasMostrar()
