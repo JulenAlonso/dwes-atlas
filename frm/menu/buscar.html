@@ -11,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 40vh;
+            height: 30vh;
             flex-direction: column;
             text-align: center;
         }
@@ -32,45 +32,27 @@
 </head>
 
 <body>
+    <!-- buscar.html -->
     <form action="" method="post">
         <div id="div_centrar">
-            <h2>Buscar por letra</h2>
-            <section class="layout">
-                <input type="submit" class="letra" name="letra" value="A">
-                <input type="submit" class="letra" name="letra" value="B">
-                <input type="submit" class="letra" name="letra" value="C">
-                <input type="submit" class="letra" name="letra" value="D">
-                <input type="submit" class="letra" name="letra" value="E">
-                <input type="submit" class="letra" name="letra" value="F">
-                <input type="submit" class="letra" name="letra" value="G">
-                <input type="submit" class="letra" name="letra" value="H">
-                <input type="submit" class="letra" name="letra" value="I">
-                <input type="submit" class="letra" name="letra" value="J">
-                <input type="submit" class="letra" name="letra" value="K">
-                <input type="submit" class="letra" name="letra" value="L">
-                <input type="submit" class="letra" name="letra" value="M">
-                <input type="submit" class="letra" name="letra" value="N">
-                <input type="submit" class="letra" name="letra" value="O">
-                <input type="submit" class="letra" name="letra" value="P">
-                <input type="submit" class="letra" name="letra" value="Q">
-                <input type="submit" class="letra" name="letra" value="R">
-                <input type="submit" class="letra" name="letra" value="S">
-                <input type="submit" class="letra" name="letra" value="T">
-                <input type="submit" class="letra" name="letra" value="U">
-                <input type="submit" class="letra" name="letra" value="V">
-                <input type="submit" class="letra" name="letra" value="W">
-                <input type="submit" class="letra" name="letra" value="X">
-                <input type="submit" class="letra" name="letra" value="Y">
-                <input type="submit" class="letra" name="letra" value="Z">
-            </section>
-
-            <h2>Introduce el nombre de un Pais para conocer su capital.</h2>
-            <input class="buscar" name="pais" placeholder="Pais">
+            <h2>Introduce el nombre de un País para conocer su capital.</h2>
+            <input class="buscar" name="pais" placeholder="Ej: España" required>
             <div>
-                <input type="submit" class="boton" name="buscar" value="Buscar" />
+                <input type="submit" class="boton" name="accion[buscar]" value="Buscar" />
             </div>
         </div>
     </form>
+    <?php 
+if (isset($resultado)) {
+    echo "<div style='text-align: center; margin-top: 20px; font-size: 18px;'>
+            <strong>País:</strong> {$resultado['pais']}<br>
+            <strong>Capital:</strong> {$resultado['capital']}
+          </div>";
+} elseif (isset($error)) {
+    echo "<div style='color: red; text-align: center; margin-top: 20px;'>$error</div>";
+}
+?>
+
 </body>
 
 </html>

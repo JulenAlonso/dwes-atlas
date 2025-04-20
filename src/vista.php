@@ -41,10 +41,10 @@ class Vista
 		$contenido = './frm/menu/borrar.html';
 		include './frm/main.html';
 	}
-	public static function atlasBuscar()
+	public static function atlasBuscar($resultado = null, $error = null)
 	{
 		$contenido = './frm/menu/buscar.html';
 		include './frm/main.html';
 	}
-}
+	}
 ?>

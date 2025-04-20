@@ -73,7 +73,31 @@ class Modelo
 		$stmt->execute();
 		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $resultado;
-
 	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Consultar un pais por su nombre:
+	public function VerPais($pais)
+	{
+		$sql = 'SELECT * FROM atlas WHERE pais = :pais;';
+		$stmt = $this->bd->prepare($sql);
+		$stmt->bindValue(':pais', $pais);
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Consultar una capital por su nombre:
+	public function VerCapital($capital)
+	{
+		$sql = 'SELECT * FROM atlas WHERE capital = :capital;';
+		$stmt = $this->bd->prepare($sql);
+		$stmt->bindValue(':capital', $capital);
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+
+	
 }
 ?>

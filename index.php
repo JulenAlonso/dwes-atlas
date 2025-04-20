@@ -21,4 +21,13 @@ if (isset($_POST['accion']['atlas_eliminar'])) {
 }
 
 
+// Si se ha enviado una acción con el botón 'atlas_buscar',
+// se recogen los valores del país y la capital desde el formulario (si existen),
+// y se llama al método buscarPais del controlador para buscarlo.
+// if (isset($_POST['accion']['atlas_buscar'])) {
+//     $pais = $_POST['pais'] ?? '';      // Si no se ha enviado 'pais', se deja como cadena vacía.
+//     $capital = $_POST['capital'] ?? ''; // Lo mismo para 'capital'.
+//     Controlador::buscarPais($pais, $capital);
+// }
+
 ?>

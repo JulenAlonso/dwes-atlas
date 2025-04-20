@@ -1,4 +1,5 @@
 <?php
+// Iniciamos la sesión para manejar datos de sesión
 session_start();
 
 class Controlador
@@ -26,10 +27,17 @@ class Controlador
 			unset($_SESSION['msg_error']);
 		}
 	}
+		// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Registro --- ¡No Funciona!
+
 	public static function usuarioAlta()
 	{
 		Vista::usuarioAlta();
 	}
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// AÑADIR --- ¡Funciona!
 	public static function atlasAnadir()
@@ -93,17 +101,37 @@ class Controlador
 
 
 	// ------------------------------------------------------------------------------------------------------------------------------
-
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Modificar --- ¡No Funciona!
 	public static function atlasModificar()
 	{
 		Vista::atlasModificar();
 	}
-
-
-
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// BUSCAR --- ¡No Funciona!
 	public static function atlasBuscar()
 	{
 		Vista::atlasBuscar();
+	}
+	public static function buscarPais($pais)
+	{
+		$bd = new Modelo();
+		$resultadoBD = $bd->VerPais($pais);
+		$fila = $resultadoBD[0]; // Primer país encontrado
+
+		$bd = null;
+
+		if ($resultadoBD) {
+			$resultado = [
+				'pais' => $fila['pais'],
+				'capital' => $fila['capital']
+			];
+			Vista::atlasBuscar($resultado);
+		} else {
+			$error = "El país \"$pais\" no existe en la base de datos.";
+			Vista::atlasBuscar(null, $error);
+		}
 	}
 }
 // Inicializamos la variable de acción para evitar errores si no existe
@@ -154,6 +182,11 @@ switch ($opcion[0]) {
 	// Buscar entrada en atlas
 	case "atlas_buscar":
 		Controlador::atlasBuscar();
+		break;
+	case "buscar":
+		if (!empty($_POST['pais'])) {
+			Controlador::buscarPais($_POST['pais']);
+		}
 		break;
 	default:
 		Controlador::usuarioLogin();
