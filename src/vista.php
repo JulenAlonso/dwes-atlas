@@ -28,6 +28,7 @@ class Vista
 	}
 	public static function atlasModificar()
 	{
+		
 		$contenido = './frm/menu/modificar.html';
 		include './frm/main.html';
 	}

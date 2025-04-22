@@ -44,15 +44,16 @@
     </form>
     <?php 
 if (isset($resultado)) {
-    echo "<div style='text-align: center; margin-top: 20px; font-size: 18px;'>
-            <strong>País:</strong> {$resultado['pais']}<br>
-            <strong>Capital:</strong> {$resultado['capital']}
-          </div>";
+    echo "
+    <div style='text-align: center; margin-top: 20px; font-size: 18px;'>
+        <strong>País:</strong> {$resultado['pais']}<br>
+        <strong>Capital:</strong> {$resultado['capital']}
+    </div>";
 } elseif (isset($error)) {
-    echo "<div style='color: red; text-align: center; margin-top: 20px;'>$error</div>";
+    echo "
+    <div style='color: red; text-align: center; margin-top: 20px;'>$error</div>";
 }
 ?>
-
 </body>
 
 </html>

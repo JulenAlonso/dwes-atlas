@@ -7,6 +7,7 @@
     <style>
         body {
             text-align: center;
+            
         }
 
         input.boton {
@@ -15,24 +16,54 @@
             margin: 5px;
             padding: 8px 15px;
         }
+        h1 {
+			text-align: center;
+			color: #333;
+			font-family: Arial, sans-serif;
+			margin-top: 20px;
+			font-size: 2em;
+		}
+		table {
+            flex: 1;
+			width: 50%;
+			border-collapse: collapse;
+			text-align: center;
+			align-items: center;
+			margin: 20px auto;
+			font-family: Arial, sans-serif;
+			font-size: 1.2em;
+			color: #333;
+			background-color: #f9f9f9;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+		}
+		th, td {
+			padding: 10px;
+			border: 1px solid #ddd;
+		}
+		th {
+			background-color: #f2f2f2;
+		}
+
+
     </style>
 </head>
 
 <body>
-    <h2>Modificar Datos</h2>
+    <h1>Modificar Datos</h1>
+    <h2>Países y Capitales del Atlas</h2>
+    <?php if(isset($_SESSION['contenido'])) {echo $_SESSION['contenido'] ;} ?>
+
     <form action="" method="POST">
-        <h3>Dato a Modificar</h3>
-        <input type="text" name="pais" placeholder="Pais actual">
-        <input type="text" name="capital" placeholder="Capital actual">
-    
         <h3>Nuevo Dato</h3>
-        <input type="text" name="newPais" placeholder="Nuevo Pais">
+        <input type="text" name="pais" placeholder="Pais">
+        <input type="text" name="capital" placeholder="Capital">
+        <p></p>
         <input type="text" name="newCapital" placeholder="Nueva Capital">
-    
         <p></p>
         <input type="submit" class="boton" name="accion" value="Modificar">
     </form>
-    
+
 </body>
 
 </html>

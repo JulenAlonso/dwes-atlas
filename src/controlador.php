@@ -27,7 +27,7 @@ class Controlador
 			unset($_SESSION['msg_error']);
 		}
 	}
-		// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Registro --- ¡No Funciona!
@@ -49,7 +49,7 @@ class Controlador
 		$bd = new Modelo();
 		$bd->AniadirPais($pais, $capital);
 		$bd = null;
-		// echo "Pais añadido";
+		$_SESSION['msg_exito'] = "Pais añadido";
 		Vista::atlasAnadir();
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -64,12 +64,14 @@ class Controlador
 		$modelo = new Modelo();
 		$paises = $modelo->VerPaises();
 		$modelo = null;
-		echo "<table>";
-		echo "<tr><th>Pais</th><th>Capital</th></tr>";
+		$_SESSION['contenido'] = '';
+		$_SESSION['contenido'] .= "<table>";
+		$_SESSION['contenido'] .= "<tr><th>Pais</th><th>Capital</th></tr>";
+		// Guardamos los países en la sesión para usarlos en la vista
 		foreach ($paises as $pais) {
-			echo "<tr><td>" . $pais['pais'] . "</td><td>" . $pais['capital'] . "</td></tr>";
+			$_SESSION['contenido'] .= "<tr><td>" . $pais['pais'] . "</td><td>" . $pais['capital'] . "</td></tr>";
 		}
-		echo "</table>";
+		$_SESSION['contenido'] .= "</table>";
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ELIMINAR --- 
@@ -105,6 +107,7 @@ class Controlador
 	// Modificar --- ¡No Funciona!
 	public static function atlasModificar()
 	{
+
 		Vista::atlasModificar();
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -133,6 +136,15 @@ class Controlador
 			Vista::atlasBuscar(null, $error);
 		}
 	}
+
+	public static function limpiarMensajes()
+	{
+		$_SESSION['msg_info'] = '';
+		$_SESSION['msg_exito'] = '';
+		$_SESSION['msg_aviso'] = '';
+		$_SESSION['msg_error'] = '';
+		$_SESSION['msg_valida'] = '';
+	}
 }
 // Inicializamos la variable de acción para evitar errores si no existe
 if (!isset($_POST['accion']))
@@ -149,41 +161,50 @@ switch ($opcion[0]) {
 		break;
 	// Registro de usuario
 	case "usuario_alta":
+		Controlador::limpiarMensajes();
 		Controlador::usuarioAlta();
 		break;
-
 	// --------- AÑADIR
 	// Alta de entrada en atlas
 	case "atlas_anadir":
+		Controlador::limpiarMensajes();
 		Controlador::atlasAnadir();
 		break;
 	//Añadir: Pais y capital
 	case "aniadir":
+		Controlador::limpiarMensajes();
+		
 		Controlador::AniadirPais($_POST['pais'], $_POST['capital']);
 		break;
 	//---------------------------------
-
 	// Modificar entrada en atlas
 	case "atlas_modificar":
+		Controlador::limpiarMensajes();
+		Controlador::verPaises();
+		// Aqui $_SESSION['contenido'] ya tiene los paises
 		Controlador::atlasModificar();
 		break;
-
 	// --------- MOSTRAR
 	// Mostrar contenido del atlas
 	case "atlas_mostrar":
+		Controlador::limpiarMensajes();
 		Controlador::atlasMostrar(); // Mostrar vista
 		Controlador::verPaises();   // Mostrar mensaje del modelo
 		break;
 
 	// Baja de entrada en atlas
 	case "atlas_eliminar":
+		Controlador::limpiarMensajes();
+		Controlador::verPaises();
 		Controlador::atlasEliminar();
 		break;
 	// Buscar entrada en atlas
 	case "atlas_buscar":
+		Controlador::limpiarMensajes();
 		Controlador::atlasBuscar();
 		break;
 	case "buscar":
+		Controlador::limpiarMensajes();
 		if (!empty($_POST['pais'])) {
 			Controlador::buscarPais($_POST['pais']);
 		}
