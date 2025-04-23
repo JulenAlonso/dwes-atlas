@@ -9,10 +9,14 @@ class Controlador
 	{
 		Vista::usuarioLogin();
 	}
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------
+	// Login --- ¡No Funciona!
 	public static function usuarioRegistro($usuario, $passwd)
 	{
 		// Aqui debemos validar al usuario, si esta bien: pasa / si esta mal: no hacemos nada
-		// $pass = Modelo::getPasswd($usuario);
+		$pass = Modelo::getPasswd($usuario);
 		$pass = $passwd;
 		if ($passwd == $pass) {
 			$_SESSION['registrado'] = true;
@@ -30,12 +34,20 @@ class Controlador
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
-	// Registro --- ¡No Funciona!
-
+	// Registro --- ¡Funciona!
 	public static function usuarioAlta()
 	{
 		Vista::usuarioAlta();
 	}
+	public static function AniadirUsuario($nombre, $password)
+	{
+		$bd = new Modelo();
+		$bd->AniadirUsuario($nombre, $password);
+		$bd = null;
+		$_SESSION['msg_exito'] = "Usuario creado correctamente";
+		Vista::usuarioLogin();
+	}
+
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -157,12 +169,13 @@ else
 switch ($opcion[0]) {
 	// Acceso de usuario
 	case "usuario_registro":
+		Controlador::limpiarMensajes();
 		Controlador::usuarioRegistro($_POST['usuario'], $_POST['passwd']);
 		break;
 	// Registro de usuario
 	case "usuario_alta":
 		Controlador::limpiarMensajes();
-		Controlador::usuarioAlta();
+		Controlador::AniadirUsuario($_POST['usuario'], $_POST['passwd']);
 		break;
 	// --------- AÑADIR
 	// Alta de entrada en atlas
@@ -173,7 +186,6 @@ switch ($opcion[0]) {
 	//Añadir: Pais y capital
 	case "aniadir":
 		Controlador::limpiarMensajes();
-		
 		Controlador::AniadirPais($_POST['pais'], $_POST['capital']);
 		break;
 	//---------------------------------
@@ -210,6 +222,7 @@ switch ($opcion[0]) {
 		}
 		break;
 	default:
+		Controlador::limpiarMensajes();
 		Controlador::usuarioLogin();
 }
 

@@ -30,6 +30,35 @@ class Modelo
 		$this->bd = null;
 	}
 
+	//Añadir usuario a la base de datos
+	//REGISTRO
+	public function AniadirUsuario($nombre, $password)
+	{
+		$sql = 'INSERT INTO usuarios (nombre, password) VALUES (:nombre, :password);';
+		//HACER BINDAJE
+		$stmt = $this->bd->prepare($sql);
+		$stmt->bindValue(':nombre', $nombre);
+		$stmt->bindValue(':password', $password);
+
+		$stmt->execute();//Lanzar la sentencia al servidor de la bbdd.
+
+	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------
+	//LOGIN
+	public function usuarioRegistro($nombre, $password)
+	{
+		$sql = 'SELECT password FROM usuarios WHERE nombre = :nombre';
+		$stmt = $this->bd->prepare($sql);
+		$stmt->bindValue(':nombre', $nombre);
+		$stmt->bindValue(':password', $password);
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+
+
+
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// Añadir un pais a la base de datos
 	public function AniadirPais($pais, $capital)
@@ -86,7 +115,5 @@ class Modelo
 		$stmt->bindValue(':capital', $capital);
 		$stmt->execute();
 	}
-
-
 }
 ?>
