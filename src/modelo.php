@@ -48,10 +48,9 @@ class Modelo
 	//LOGIN
 	public function usuarioRegistro($nombre, $password)
 	{
-		$sql = 'SELECT password FROM usuarios WHERE nombre = :nombre';
+		$sql = 'SELECT PASSWORD FROM `usuarios` WHERE nombre = :nombre';
 		$stmt = $this->bd->prepare($sql);
 		$stmt->bindValue(':nombre', $nombre);
-		$stmt->bindValue(':password', $password);
 		$stmt->execute();
 		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $resultado;

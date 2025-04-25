@@ -1,10 +1,6 @@
 <?php
-// Iniciamos la sesión para manejar datos de sesión
-session_start();
-
 class Controlador
 {
-
 	public static function usuarioLogin()
 	{
 		Vista::usuarioLogin();
@@ -12,23 +8,22 @@ class Controlador
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
 	// ------------------------------------------------------------------------------------------------------------------------------
-	// Login --- ¡No Funciona!
+	// Login --- ¡Funciona!
 	public static function usuarioRegistro($usuario, $passwd)
 	{
-		// Aqui debemos validar al usuario, si esta bien: pasa / si esta mal: no hacemos nada
-		$pass = Modelo::getPasswd($usuario);
-		$pass = $passwd;
-		if ($passwd == $pass) {
-			$_SESSION['registrado'] = true;
-			Vista::usuarioRegistro();
-		} else if ($pass == '') {
-			//El usuario no existe.
-			Vista::usuarioLogin();
+		$bd = new Modelo();
+		$resultadoBD = $bd->usuarioRegistro($usuario, $passwd);
+		$bd = null;
+		if ($resultadoBD) {
+			//Tenemos que guardar el usuario en la sesión
+			$_SESSION['usuario'] = $usuario;
+			$_SESSION['msg_exito'] = "Usuario registrado correctamente";
+			// Si el usuario existe, redirigimos a la vista de atlas
+			Vista::atlasMostrar();
 		} else {
-			$_SESSION['msg_error'] = 'La contaseña es incorrecta';
-			//La passwd es incorrecta
+			// Si el usuario no existe, mostramos un mensaje de error
+			$_SESSION['msg_error'] = "Usuario o contraseña incorrectos";
 			Vista::usuarioLogin();
-			unset($_SESSION['msg_error']);
 		}
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------
@@ -54,6 +49,12 @@ class Controlador
 	// AÑADIR --- ¡Funciona!
 	public static function atlasAnadir()
 	{
+		//Verificar que la sesión está iniciada
+		if (!isset($_SESSION['usuario'])) {
+			$_SESSION['msg_error'] = "No has iniciado sesión. Por favor, inicia sesión para acceder a esta página.";
+			Vista::usuarioLogin();
+			exit;
+		}
 		Vista::atlasAnadir();
 	}
 	public static function AniadirPais($pais, $capital)
@@ -68,6 +69,13 @@ class Controlador
 	// MOSTRAR --- ¡Funciona!
 	public static function atlasMostrar()
 	{
+		//Verificar que la sesión está iniciada
+		if (!isset($_SESSION['usuario'])) {
+			$_SESSION['msg_error'] = "No has iniciado sesión. Por favor, inicia sesión para acceder a esta página.";
+			Vista::usuarioLogin();
+			exit;
+		}
+
 		//----Entra perfectamente----
 		Vista::atlasMostrar();
 	}
@@ -89,6 +97,13 @@ class Controlador
 	// ELIMINAR --- 
 	public static function atlasEliminar()
 	{
+		//Verificar que la sesión está iniciada
+		if (!isset($_SESSION['usuario'])) {
+			$_SESSION['msg_error'] = "No has iniciado sesión. Por favor, inicia sesión para acceder a esta página.";
+			Vista::usuarioLogin();
+			exit;
+		}
+
 		Vista::atlasEliminar();
 	}
 
@@ -119,6 +134,12 @@ class Controlador
 	// Modificar --- ¡No Funciona!
 	public static function atlasModificar()
 	{
+		//Verificar que la sesión está iniciada
+		if (!isset($_SESSION['usuario'])) {
+			$_SESSION['msg_error'] = "No has iniciado sesión. Por favor, inicia sesión para acceder a esta página.";
+			Vista::usuarioLogin();
+			exit;
+		}
 
 		Vista::atlasModificar();
 	}
@@ -127,6 +148,13 @@ class Controlador
 	// BUSCAR --- ¡No Funciona!
 	public static function atlasBuscar()
 	{
+		//Verificar que la sesión está iniciada
+		if (!isset($_SESSION['usuario'])) {
+			$_SESSION['msg_error'] = "No has iniciado sesión. Por favor, inicia sesión para acceder a esta página.";
+			Vista::usuarioLogin();
+			exit;
+		}
+
 		Vista::atlasBuscar();
 	}
 	public static function buscarPais($pais)
